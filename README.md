@@ -12,7 +12,7 @@ ShanghaiTech SI252 Reinforcement Learning final project, Spring 2025.
 
 ## week 2 (2025/5/25)
 
-- Contextual bandit:
+- Contextual bandit: We've finished experimenting with various replay buffer strategies this week, aiming to emphasize the impact of negative samples on the correction of diffusion parameters, ultimately intensifying the effect of online updates. We also included comparisons with other methods such as KernelUCB, NeuralUCB, and NeuralEpsilon. However, due to the more generalized nature of diffusion, its adjustment speed is slower than that of NeuralEpsilon. Next week, we plan to improve the internal sampling method of the diffusion model.
 
 
 
