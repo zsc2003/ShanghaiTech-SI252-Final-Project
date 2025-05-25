@@ -122,4 +122,86 @@ class BernoulliDiffusionBandit:
             prob = torch.sigmoid(pred_logits).item()
             return prob
 
+class PrioritizedReplayBuffer:
+    def __init__(self, buffer_size=5000, hard_sample_ratio=0.75, confidence_threshold=0.4):
+        self.hard_samples = deque(maxlen=int(buffer_size * hard_sample_ratio))
+        self.normal_samples = deque(maxlen=int(buffer_size * (1 - hard_sample_ratio)))
+        self.buffer_size = buffer_size
+        self.hard_sample_ratio = hard_sample_ratio
+        self.confidence_threshold = confidence_threshold
+    
+    def add(self, context, arm, reward, confidence, best_arm=None, all_rewards=None, all_contexts=None):
+        is_best_arm = best_arm is not None and arm == best_arm
 
+        adjusted_confidence = confidence
+        if best_arm is not None and arm != best_arm and confidence > 0.5:
+            adjusted_confidence = 0.0001
+        
+        sample = {
+            'context': context,
+            'arm': arm,
+            'reward': reward,
+            'original_confidence': confidence,
+            'confidence': adjusted_confidence,
+            'is_best_arm': is_best_arm,
+            'is_deceptive': (best_arm is not None and arm != best_arm and confidence > 0.5),
+            'all_rewards': all_rewards,
+            'all_contexts': all_contexts
+        }
+
+        if adjusted_confidence < self.confidence_threshold or (best_arm is not None and arm != best_arm):
+            self.hard_samples.append(sample)
+        else:
+            self.normal_samples.append(sample)
+    
+    def sample(self, batch_size):
+        hard_sample_count = min(int(batch_size * self.hard_sample_ratio), len(self.hard_samples))
+        normal_sample_count = min(batch_size - hard_sample_count, len(self.normal_samples))
+        
+        if hard_sample_count < int(batch_size * self.hard_sample_ratio) and len(self.normal_samples) > normal_sample_count:
+            additional = min(int(batch_size * self.hard_sample_ratio) - hard_sample_count, 
+                             len(self.normal_samples) - normal_sample_count)
+            normal_sample_count += additional
+        
+        if normal_sample_count < batch_size - int(batch_size * self.hard_sample_ratio) and len(self.hard_samples) > hard_sample_count:
+            additional = min(batch_size - int(batch_size * self.hard_sample_ratio) - normal_sample_count,
+                             len(self.hard_samples) - hard_sample_count)
+            hard_sample_count += additional
+
+        hard_batch = list(self.hard_samples)
+        normal_batch = list(self.normal_samples)
+        
+        hard_batch.sort(key=lambda x: x['confidence'])
+        hard_batch = hard_batch[:hard_sample_count] if hard_sample_count > 0 else []
+        
+        normal_batch = random.sample(normal_batch, normal_sample_count) if normal_sample_count > 0 else []
+        
+        return hard_batch + normal_batch
+    
+    def get_lowest_confidence_samples(self, count=10):
+        all_samples = list(self.hard_samples) + list(self.normal_samples)
+        all_samples.sort(key=lambda x: x['confidence'])
+        return all_samples[:count]
+    
+    def __len__(self):
+        return len(self.hard_samples) + len(self.normal_samples)
+    
+    def hard_sample_percentage(self):
+        if len(self) == 0:
+            return 0
+        return len(self.hard_samples) / len(self) * 100
+    
+    def confidence_statistics(self):
+        if len(self) == 0:
+            return {'min': 0, 'max': 0, 'mean': 0, 'median': 0}
+        
+        all_confidences = [s['confidence'] for s in list(self.hard_samples) + list(self.normal_samples)]
+        return {
+            'min': min(all_confidences),
+            'max': max(all_confidences),
+            'mean': sum(all_confidences) / len(all_confidences),
+            'median': sorted(all_confidences)[len(all_confidences) // 2]
+        }
+    
+    def get_all_samples(self):
+        return list(self.hard_samples) + list(self.normal_samples)
