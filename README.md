@@ -22,8 +22,7 @@ More comparison and analysis are under discovering.
 
 
 ## week 3 (2025/6/1)
-
-
+- Contextual bandit: We replaced the internal mechanism of the discrete diffusion version of the RL project with a more precise alternative to mask version, but the results did not improve.
 
 - Stochastic bandit: We did further explorations on the stochastic bandit problem. With different settings: different number of arms, different hyperparameters, different types of reward distributions. \
 More research work such as combining with restless bandit, converting dream policy's idea into a stochastic bandit problem, backing up the codes are the TODOs.
