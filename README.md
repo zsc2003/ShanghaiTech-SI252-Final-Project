@@ -26,3 +26,9 @@ More comparison and analysis are under discovering.
 
 - Stochastic bandit: We did further explorations on the stochastic bandit problem. With different settings: different number of arms, different hyperparameters, different types of reward distributions. \
 More research work such as combining with restless bandit, converting dream policy's idea into a stochastic bandit problem, backing up the codes are the TODOs.
+
+
+## week 4 (2025/6/8)
+- Did some further explorations
+- Make poster and final presentation
+- Finished final report
