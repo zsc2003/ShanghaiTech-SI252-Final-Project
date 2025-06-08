@@ -1,0 +1,35 @@
+\begin{itemize}
+    \item Traditional algorithms: cold start or rely on limited offline logs, which suffer from size limitations, narrow coverage, and distribution bias, constraining performance.
+    \item Our approach: employ a discrete diffusion model to synthesize additional pseudo-trajectories, broadening data diversity and coverage, and apply a policy gradient based bandit algorithm to fully exploit the expanded offline dataset.
+\end{itemize}
+
+Similarly to the policy gradient methods~\cite{sutton1999policy} in Reinforcement Learning algorithms, in the bandit settings, the online interaction log of a stochastic multi-armed bandit can be viewed as a trajectory composed of action–reward pairs.
+\begin{equation}
+\psi=\left(a_0,r_1,\cdots,,a_{T-1},r_T\right).
+\end{equation}
+By archiving several past trajectories into an offline dataset, we can pre-train the stochastic bandit and thereby cut down the cost of subsequent online interactions. The probability of encountering a specific trajectory $\psi$ is
+\begin{equation}
+P_{\theta}(\psi)=\prod_{t=0}^{T-1}\pi_{\theta}(a_t \mid a_0, r_1,\ldots, a_{t-1},r_t).
+\end{equation}
+The objective function is given by
+\begin{equation}
+J(\theta) = \mathbb{E}_{\Psi\sim P_{\theta}}\left[R(\Psi)\right] = \sum_{\psi}P_{\theta}(\psi)R(\psi).
+\end{equation}
+The policy gradient can be expressed as
+\begin{equation}
+\nabla_{\theta}J(\theta) \approx \dfrac{1}{m}\sum_{i=1}^m\sum_{t=0}^{T-1}\left[\left(R_t^i - b_t\right) \nabla_{\theta}\log\pi_{\theta}\left(a_t^i \mid a_0^i, r_1^i,\ldots, a_{t-1}^i,r_t^i\right)\right] \\
+\end{equation}
+Thus, given an offline dataset, we improve stochastic bandit performance:
+
+1. \textbf{Dataset expansion}: generate extra trajectories with diffusion model.
+
+2. \textbf{Pre-training}: train stochastic bandit algorithms on the enlarged dataset.
+
+3. \textbf{Online adaptation}: run and refine the pretrained agents online.
+
+With the pretrained weights, the policy executed at each online step is:
+\begin{equation}
+\pi_{\theta}(a)=\dfrac{e^{\beta_tH_{\theta}(a)}}{\sum_{a'} e^{\beta_tH_{\theta}(a')}}
+\end{equation}
+Which is similar to the traditional gradient bandit algorithm~\cite{gradient_bandit}, and has similar online update rules. 
+The non-Bernoulli distribution $X \in \{0,\,0.5,\,1\}$ with probs $\theta_1,\theta_2,1-\theta_1-\theta_2$ was also used to test the performance.

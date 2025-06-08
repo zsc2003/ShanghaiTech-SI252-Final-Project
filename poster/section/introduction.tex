@@ -1,0 +1,11 @@
+\textbf{Diffusion models}\cite{campbell2022continuous} are generative models that learn data distributions through step-by-step denoising. While popular in image generation, they also excel at modeling complex, multimodal structures in other domains.
+
+\input{Img/Markov_chain}
+
+In this work, we explore diffusion in \textbf{offline bandit learning} from two perspectives:
+
+\begin{itemize}
+     \item \textbf{Stochastic Bandit}: A discrete diffusion model generates additional trajectories from interaction logs, expanding the limited offline dataset to enhance pretraining and reduce exploration costs.
+
+    \item \textbf{Contextual Bandit}: A diffusion model is trained to approximate the conditional reward distribution \( P(r \mid c, a) \), enabling action selection via sampling and capturing aleatoric uncertainty.
+\end{itemize}

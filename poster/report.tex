@@ -1,0 +1,115 @@
+\documentclass[24pt,margin=1in,innermargin=-7in,blockverticalspace=-0.25in]{tikzposter}
+\geometry{paperwidth=47.24in,paperheight=35.43in}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{enumitem}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\usepackage{uomtheme}
+\usepackage{booktabs, amsthm, amsmath}
+\usepackage{caption}
+\usepackage{tikz}
+\usetikzlibrary{arrows, automata, positioning}
+
+
+\usepackage{mwe} % for placeholder images
+
+\addbibresource{refs.bib}
+
+% set theme parameters
+\tikzposterlatexaffectionproofoff
+\usetheme{UoMTheme}
+\usecolorstyle{UoMStyle}
+
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault} 
+\usepackage[T1]{fontenc}
+
+\title{Diffusion for Offline Bandit}
+\author{Shouchen Zhou, Xinyue Ying}
+% \author{%
+%   Shouchen Zhou\\
+%     \texttt{zhou.sc@shanghaitech.edu.cn}\\
+%   Xinyue Ying\\
+%   \texttt{yingxy@shanghaitech.edu.cn}
+% }
+\institute{ShanghaiTech University}
+
+% \titlegraphic{\includegraphics[width=0.06\textwidth]{Img/Shanghaitch_logo.png}}
+% \titlegraphic{\includegraphics[width=0.06\textwidth]{Img/ShanghaiTech.png}}
+
+\newcommand{\x}{\mathbf{x}}
+
+
+\makeatletter
+\setlength{\TP@titlegraphictotitledistance}{0cm} 
+% remove default spacing if needed
+\settitle{
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west, xshift=-35cm, yshift=-1cm] at (current page.north west)
+      {\includegraphics[width=0.17\textwidth]{Img/ShanghaiTech.png}};
+
+    \node[anchor=north west, xshift=40cm, yshift=-1.2cm] at (current page.north west)
+      {\includegraphics[width=0.05\textwidth]{Img/Shanghaitch_logo.png}};
+  \end{tikzpicture}
+  \centering
+  \color{titlefgcolor}
+  {\bfseries \Huge \sc \@title \par}
+  \vspace{0.5em}
+  {\huge \@author}
+}
+\makeatother
+
+
+% begin document
+\begin{document}
+\maketitle
+\centering
+\begin{columns}
+    \column{0.32}
+    \block{Introduction}
+    {
+        \input{section/introduction}
+    }
+    
+    \block{Stochastic Bandit}
+    {
+        \input{section/stochastic_bandit_method}
+    }
+    
+
+    \column{0.36}
+
+    \block{Contextual Bandit}
+    {
+        \input{section/contextual_bandit_method}
+    }
+    
+    \block{Stochastic Bandit Results}
+    {
+        \input{section/stochastic_bandit_result}
+    }
+
+   
+
+    \column{0.32}
+    \block{Contextual Bandit Results}
+    {
+        \input{section/contextual_bandit_results}
+    }
+    
+    \block{Future Work}
+    {
+        \input{section/future_work}
+    }
+    \block{References}{
+        \vspace{-1em}
+        \begin{footnotesize}
+        \printbibliography[heading=none]
+        \end{footnotesize}
+    }
+\end{columns}
+\end{document}
