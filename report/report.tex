@@ -1,0 +1,87 @@
+\documentclass{article}
+
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2025
+
+% ready for submission
+% \usepackage{neurips_2025}
+
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+    % \usepackage[preprint]{neurips_2025}
+
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+    \usepackage[final]{neurips_2025}
+
+
+% to avoid loading the natbib package, add option nonatbib:
+%    \usepackage[nonatbib]{neurips_2025}
+
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+\usepackage{graphicx}
+\usepackage{booktabs, amsthm, amsmath}
+\usepackage{algorithm, algpseudocode} % pseudocode
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,positioning}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\mP}{\mathcal{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\Beta}{\operatorname{Beta}}
+\newcommand{\Bern}{\operatorname{Bern}}
+\newcommand{\argmax}{\mathop{\rm argmax}}
+
+\title{Diffusion for Offline Bandit}
+
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+
+\author{Xinyue Ying \\
+  ShanghaiTech University\\
+  2024233224 \\
+  \texttt{yingxy2024@shanghaitech.edu.cn} \\
+  \And
+  Shouchen Zhou \\
+  ShanghaiTech University\\
+  2021533042 \\
+  \texttt{zhoushch@shanghaitech.edu.cn} \\
+}
+
+
+\begin{document}
+
+\maketitle
+
+\input{section/0_abstract}
+\input{section/1_introduction}
+\input{section/2_related_work}
+\input{section/3_method}
+\input{section/4_experiments}
+\input{section/5_conclusion}
+
+\newpage
+\input{section/6_reference}
+
+\end{document}

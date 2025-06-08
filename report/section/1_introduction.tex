@@ -1,0 +1,22 @@
+\section{Introduction} \label{sec:1_introduction}
+
+\textbf{Diffusion models}\cite{campbell2022continuous} are generative models that learn data distributions through step-by-step denoising. While popular in image generation, they also excel at modeling complex, multimodal structures in other domains.
+
+\input{Img/Markov_chain}
+
+In this work, we explore diffusion in \textbf{offline bandit learning} from two perspectives: Stochastic Bandit and Contextual Bandit.
+
+\subsection{Stochastic Bandit}
+In the stochastic multi-armed bandit setting, a small set of interaction logs can be collected in advance and used as an offline dataset, yielding better initial decisions and shortening the cold-start phase. Yet these logs are often limited in size, lack coverage, and exhibit distributional bias, which constrains policy optimisation. To mitigate these issues, we employ a discrete diffusion model to generate pseudo-samples that match the empirical distribution of the original logs, thereby enlarging the dataset. Specifically, the diffusion model is first trained on the real logs, then used to synthesise additional trajectories, which are merged with the original data to pre-train (or warm-start) the bandit algorithm before a brief online fine-tuning stage. Experiments demonstrate that the diffusion-augmented dataset significantly improves policy quality and accelerates convergence compared with using only the original logs or relying solely on online learning.
+
+
+
+\subsection{Contextual Bandit}
+The contextual bandit problem is a fundamental framework for sequential decision-making under uncertainty. At each round $t \in \{1, \dots, T\}$, an agent observes a context and selects an action from a finite set. Each action is associated with a feature vector, and upon selection, the agent receives a reward drawn from an unknown distribution conditioned on the context and chosen action. The goal is to maximize the expected cumulative reward over $T$ rounds. 
+
+A common modeling assumption is that the reward can be expressed as the sum of a deterministic mean and an additive noise term: $r = \mathbb{E}[r \mid c, a] + \varepsilon$. Most existing methods focus on estimating the mean $\mathbb{E}[r \mid c, a]$, while treating $\varepsilon$ as an independent and unstructured random variable. This includes classical linear models such as LinUCB \citep{li_contextual-bandit_2010} and LinTS \citep{agrawal_thompson_2014}, kernel-based approaches like GP-UCB \citep{srinivas_gaussian_nodate} and KernelUCB \citep{valko_finite-time_2013}, and deep learning-based models such as NeuralUCB\citep{zhou_neural_2020} and NeuralTS \citep{zhang_neural_2021}. While differing in model class and complexity, these methods share a fundamental reduction of reward modeling to point estimation of the mean and fail to capture important structure in the conditional reward distribution.
+
+However, real-world reward distributions are often multimodal, asymmetric, or heavy-tailed, characteristics that are not captured by simple mean estimators. Risk-sensitive objectives, such as Conditional Value-at-Risk (CVaR) or mean-variance criteria \citep{sani2012risk}, attempt to account for such uncertainties, but they typically rely on handcrafted assumptions and only incorporate limited aspects of the reward distribution. However, these methods do not attempt to learn the full reward distribution itself.
+
+
+In this work, we propose a new approach to contextual bandits by directly modeling the full reward distribution $P(r \mid c, a)$ using a diffusion-based generative model. This enables us to capture aleatoric uncertainty and richer structure in the reward distribution than conventional estimators allow.

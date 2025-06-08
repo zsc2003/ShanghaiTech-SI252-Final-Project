@@ -1,0 +1,169 @@
+@article{sutton1999policy,
+  title={Policy gradient methods for reinforcement learning with function approximation},
+  author={Sutton, Richard S and McAllester, David and Singh, Satinder and Mansour, Yishay},
+  journal={Advances in neural information processing systems},
+  volume={12},
+  year={1999}
+}
+
+@article{GAN,
+  title={Generative adversarial networks},
+  author={Goodfellow, Ian and Pouget-Abadie, Jean and Mirza, Mehdi and Xu, Bing and Warde-Farley, David and Ozair, Sherjil and Courville, Aaron and Bengio, Yoshua},
+  journal={Communications of the ACM},
+  volume={63},
+  number={11},
+  pages={139--144},
+  year={2020},
+  publisher={ACM New York, NY, USA}
+}
+
+@misc{VAE,
+  title={Auto-encoding variational bayes},
+  author={Kingma, Diederik P and Welling, Max and others},
+  year={2013},
+  publisher={Banff, Canada}
+}
+
+@article{ddpm,
+  title={Denoising diffusion probabilistic models},
+  author={Ho, Jonathan and Jain, Ajay and Abbeel, Pieter},
+  journal={Advances in neural information processing systems},
+  volume={33},
+  pages={6840--6851},
+  year={2020}
+}
+
+@article{UCB,
+  title={Finite-time analysis of the multiarmed bandit problem},
+  author={Auer, Peter and Cesa-Bianchi, Nicolo and Fischer, Paul},
+  journal={Machine learning},
+  volume={47},
+  pages={235--256},
+  year={2002},
+  publisher={Springer}
+}
+
+@article{TS,
+  title={On the likelihood that one unknown probability exceeds another in view of the evidence of two samples},
+  author={Thompson, William R},
+  journal={Biometrika},
+  volume={25},
+  number={3/4},
+  pages={285--294},
+  year={1933},
+  publisher={JSTOR}
+}
+
+
+@article{campbell2022continuous,
+  title={A continuous time framework for discrete denoising models},
+  author={Campbell, Andrew and Benton, Joe and De Bortoli, Valentin and Rainforth, Thomas and Deligiannidis, George and Doucet, Arnaud},
+  journal={Advances in Neural Information Processing Systems},
+  volume={35},
+  pages={28266--28279},
+  year={2022}
+}
+
+@misc{gould2016differentiating,
+      title={On Differentiating Parameterized Argmin and Argmax Problems with Application to Bi-level Optimization}, 
+      author={Stephen Gould and Basura Fernando and Anoop Cherian and Peter Anderson and Rodrigo Santa Cruz and Edison Guo},
+      year={2016},
+      eprint={1607.05447},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+
+
+
+@misc{agrawal_thompson_2014,
+	title = {Thompson {Sampling} for {Contextual} {Bandits} with {Linear} {Payoffs}},
+	url = {http://arxiv.org/abs/1209.3352},
+	doi = {10.48550/arXiv.1209.3352},
+	abstract = {Thompson Sampling is one of the oldest heuristics for multi-armed bandit problems. It is a randomized algorithm based on Bayesian ideas, and has recently generated significant interest after several studies demonstrated it to have better empirical performance compared to the state-of-the-art methods. However, many questions regarding its theoretical performance remained open. In this paper, we design and analyze a generalization of Thompson Sampling algorithm for the stochastic contextual multi-armed bandit problem with linear payoff functions, when the contexts are provided by an adaptive adversary. This is among the most important and widely studied versions of the contextual bandits problem. We provide the first theoretical guarantees for the contextual version of Thompson Sampling. We prove a high probability regret bound of \${\textbackslash}tilde\{O\}(d{\textasciicircum}\{3/2\}{\textbackslash}sqrt\{T\})\$ (or \${\textbackslash}tilde\{O\}(d{\textbackslash}sqrt\{T {\textbackslash}log(N)\})\$), which is the best regret bound achieved by any computationally efficient algorithm available for this problem in the current literature, and is within a factor of \${\textbackslash}sqrt\{d\}\$ (or \${\textbackslash}sqrt\{{\textbackslash}log(N)\}\$) of the information-theoretic lower bound for this problem.},
+	urldate = {2025-06-06},
+	publisher = {arXiv},
+	author = {Agrawal, Shipra and Goyal, Navin},
+	month = feb,
+	year = {2014},
+	note = {arXiv:1209.3352 [cs]},
+	keywords = {Computer Science - Data Structures and Algorithms, Computer Science - Machine Learning, Statistics - Machine Learning},
+	file = {Preprint PDF:C\:\\Users\\ying\\Zotero\\storage\\LBD86V4L\\Agrawal和Goyal - 2014 - Thompson Sampling for Contextual Bandits with Linear Payoffs.pdf:application/pdf;Snapshot:C\:\\Users\\ying\\Zotero\\storage\\VW8ZW9XL\\1209.html:text/html},
+}
+
+@inproceedings{li_contextual-bandit_2010,
+	title = {A {Contextual}-{Bandit} {Approach} to {Personalized} {News} {Article} {Recommendation}},
+	url = {http://arxiv.org/abs/1003.0146},
+	doi = {10.1145/1772690.1772758},
+	abstract = {Personalized web services strive to adapt their services (advertisements, news articles, etc) to individual users by making use of both content and user information. Despite a few recent advances, this problem remains challenging for at least two reasons. First, web service is featured with dynamically changing pools of content, rendering traditional collaborative filtering methods inapplicable. Second, the scale of most web services of practical interest calls for solutions that are both fast in learning and computation. In this work, we model personalized recommendation of news articles as a contextual bandit problem, a principled approach in which a learning algorithm sequentially selects articles to serve users based on contextual information about the users and articles, while simultaneously adapting its article-selection strategy based on user-click feedback to maximize total user clicks. The contributions of this work are three-fold. First, we propose a new, general contextual bandit algorithm that is computationally efficient and well motivated from learning theory. Second, we argue that any bandit algorithm can be reliably evaluated offline using previously recorded random traffic. Finally, using this offline evaluation method, we successfully applied our new algorithm to a Yahoo! Front Page Today Module dataset containing over 33 million events. Results showed a 12.5\% click lift compared to a standard context-free bandit algorithm, and the advantage becomes even greater when data gets more scarce.},
+	urldate = {2025-06-06},
+	booktitle = {Proceedings of the 19th international conference on {World} wide web},
+	author = {Li, Lihong and Chu, Wei and Langford, John and Schapire, Robert E.},
+	month = apr,
+	year = {2010},
+	note = {arXiv:1003.0146 [cs]},
+	keywords = {Computer Science - Artificial Intelligence, Computer Science - Information Retrieval, Computer Science - Machine Learning},
+	pages = {661--670},
+	file = {Full Text PDF:C\:\\Users\\ying\\Zotero\\storage\\5G3DG8Z4\\Li 等 - 2010 - A Contextual-Bandit Approach to Personalized News Article Recommendation.pdf:application/pdf;Snapshot:C\:\\Users\\ying\\Zotero\\storage\\WZBSHAHQ\\1003.html:text/html},
+}
+
+@article{srinivas_gaussian_nodate,
+	title = {Gaussian {Process} {Optimization} in the {Bandit} {Setting}:  {No} {Regret} and {Experimental} {Design}},
+	abstract = {Many applications require optimizing an unknown, noisy function that is expensive to evaluate. We formalize this task as a multiarmed bandit problem, where the payoﬀ function is either sampled from a Gaussian process (GP) or has low RKHS norm. We resolve the important open problem of deriving regret bounds for this setting, which imply novel convergence rates for GP optimization. We analyze GP-UCB, an intuitive upper-conﬁdence based algorithm, and bound its cumulative regret in terms of maximal information gain, establishing a novel connection between GP optimization and experimental design. Moreover, by bounding the latter in terms of operator spectra, we obtain explicit sublinear regret bounds for many commonly used covariance functions. In some important cases, our bounds have surprisingly weak dependence on the dimensionality. In our experiments on real sensor data, GP-UCB compares favorably with other heuristical GP optimization approaches.},
+	language = {en},
+	author = {Srinivas, Niranjan and Krause, Andreas and Kakade, Sham and Seeger, Matthias},
+	file = {PDF:C\:\\Users\\ying\\Zotero\\storage\\YBFF8UDW\\Srinivas 等 - Gaussian Process Optimization in the Bandit Setting  No Regret and Experimental Design.pdf:application/pdf},
+}
+
+@misc{valko_finite-time_2013,
+	title = {Finite-{Time} {Analysis} of {Kernelised} {Contextual} {Bandits}},
+	url = {http://arxiv.org/abs/1309.6869},
+	doi = {10.48550/arXiv.1309.6869},
+	abstract = {We tackle the problem of online reward maximisation over a large finite set of actions described by their contexts. We focus on the case when the number of actions is too big to sample all of them even once. However we assume that we have access to the similarities between actions' contexts and that the expected reward is an arbitrary linear function of the contexts' images in the related reproducing kernel Hilbert space (RKHS). We propose KernelUCB, a kernelised UCB algorithm, and give a cumulative regret bound through a frequentist analysis. For contextual bandits, the related algorithm GP-UCB turns out to be a special case of our algorithm, and our finite-time analysis improves the regret bound of GP-UCB for the agnostic case, both in the terms of the kernel-dependent quantity and the RKHS norm of the reward function. Moreover, for the linear kernel, our regret bound matches the lower bound for contextual linear bandits.},
+	urldate = {2025-06-06},
+	publisher = {arXiv},
+	author = {Valko, Michal and Korda, Nathaniel and Munos, Remi and Flaounas, Ilias and Cristianini, Nelo},
+	month = sep,
+	year = {2013},
+	note = {arXiv:1309.6869 [cs]},
+	keywords = {Computer Science - Machine Learning, Statistics - Machine Learning},
+	file = {Preprint PDF:C\:\\Users\\ying\\Zotero\\storage\\EPEYHEVJ\\Valko 等 - 2013 - Finite-Time Analysis of Kernelised Contextual Bandits.pdf:application/pdf;Snapshot:C\:\\Users\\ying\\Zotero\\storage\\W3TFBH8M\\1309.html:text/html},
+}
+
+@misc{zhou_neural_2020,
+	title = {Neural {Contextual} {Bandits} with {UCB}-based {Exploration}},
+	url = {http://arxiv.org/abs/1911.04462},
+	doi = {10.48550/arXiv.1911.04462},
+	abstract = {We study the stochastic contextual bandit problem, where the reward is generated from an unknown function with additive noise. No assumption is made about the reward function other than boundedness. We propose a new algorithm, NeuralUCB, which leverages the representation power of deep neural networks and uses a neural network-based random feature mapping to construct an upper confidence bound (UCB) of reward for efficient exploration. We prove that, under standard assumptions, NeuralUCB achieves \${\textbackslash}tilde O({\textbackslash}sqrt\{T\})\$ regret, where \$T\$ is the number of rounds. To the best of our knowledge, it is the first neural network-based contextual bandit algorithm with a near-optimal regret guarantee. We also show the algorithm is empirically competitive against representative baselines in a number of benchmarks.},
+	language = {en-US},
+	urldate = {2025-06-06},
+	publisher = {arXiv},
+	author = {Zhou, Dongruo and Li, Lihong and Gu, Quanquan},
+	month = jul,
+	year = {2020},
+	note = {arXiv:1911.04462 [cs]},
+	keywords = {Computer Science - Machine Learning, Statistics - Machine Learning},
+	file = {Preprint PDF:C\:\\Users\\ying\\Zotero\\storage\\CKLMKBVF\\Zhou 等 - 2020 - Neural Contextual Bandits with UCB-based Exploration.pdf:application/pdf;Snapshot:C\:\\Users\\ying\\Zotero\\storage\\ALAQAVI7\\1911.html:text/html},
+}
+
+@misc{zhang_neural_2021,
+	title = {Neural {Thompson} {Sampling}},
+	url = {http://arxiv.org/abs/2010.00827},
+	doi = {10.48550/arXiv.2010.00827},
+	abstract = {Thompson Sampling (TS) is one of the most effective algorithms for solving contextual multi-armed bandit problems. In this paper, we propose a new algorithm, called Neural Thompson Sampling, which adapts deep neural networks for both exploration and exploitation. At the core of our algorithm is a novel posterior distribution of the reward, where its mean is the neural network approximator, and its variance is built upon the neural tangent features of the corresponding neural network. We prove that, provided the underlying reward function is bounded, the proposed algorithm is guaranteed to achieve a cumulative regret of \${\textbackslash}mathcal\{O\}(T{\textasciicircum}\{1/2\})\$, which matches the regret of other contextual bandit algorithms in terms of total round number \$T\$. Experimental comparisons with other benchmark bandit algorithms on various data sets corroborate our theory.},
+	urldate = {2025-06-06},
+	publisher = {arXiv},
+	author = {Zhang, Weitong and Zhou, Dongruo and Li, Lihong and Gu, Quanquan},
+	month = dec,
+	year = {2021},
+	note = {arXiv:2010.00827 [cs]},
+	keywords = {Computer Science - Machine Learning, Statistics - Machine Learning},
+	file = {Preprint PDF:C\:\\Users\\ying\\Zotero\\storage\\76NXSTX3\\Zhang 等 - 2021 - Neural Thompson Sampling.pdf:application/pdf;Snapshot:C\:\\Users\\ying\\Zotero\\storage\\GPB464HG\\2010.html:text/html},
+}
+
+@article{sani2012risk,
+  title={Risk-aversion in multi-armed bandits},
+  author={Sani, Amir and Lazaric, Alessandro and Munos, R{\'e}mi},
+  journal={Advances in neural information processing systems},
+  volume={25},
+  year={2012}
+}

@@ -1,0 +1,20 @@
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{c c c}
+    \toprule
+    Trajectory generation policy & UCB & policy gradient \\
+    \midrule
+    no offline dataset, 20 arms & 1351.033 & 742.086 \\
+    offline, no enlarge, 20 arms & 719.629 & 249.610 \\
+    offline+diffusion sequence (Transformer), 20 arms & 16.517 & 0.000 \\
+    no offline dataset, 25 arms & 1288.369 & 964.330 \\
+    offline, no enlarge, 25 arms & 465.870 & 186.230 \\
+    offline+diffusion sequence (Transformer), 25 arms & 12.220 & 0.000 \\
+    no offline dataset, 30 arms & 1700.104 & 1040.903 \\
+    offline, no enlarge, 30 arms & 721.866 & 406.857 \\
+    offline+diffusion sequence (Transformer), 30 arms & 119.548 & 6.077 \\
+    \bottomrule
+\end{tabular}
+\caption{Performance(average accumulated regret) of various algorithms on Bernoulli-reward bandits under different offline-dataset enlargement (trajectory-generation) policies.}
+\label{table:non_bern}
+\end{table}

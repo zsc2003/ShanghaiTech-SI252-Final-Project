@@ -1,0 +1,204 @@
+\section{Methods} \label{sec:3_methods}
+
+\subsection{Stochastic Bandit}\label{sec:stochastic_bandit_method}
+Policy-based reinforcement learning dispenses with value functions and instead learns the policy directly.  
+A parameter vector $\theta$ defines a conditional distribution $\pi_{\theta}(a\mid s)=P(a\mid s;\theta)$, from which an action is sampled at each decision point.  
+
+For a stochastic policy $\pi_{\theta}(a|s)$, it is desirable to decrease the probability of actions that yield low returns and to increase the probability of those that yield high returns. Because the policy is differentiable with respect to $\theta$, such methods enjoy favourable convergence properties and can be optimised efficiently with the policy-gradient technique.
+
+Since the policy is fully determined by $\theta$, whereas state transitions are governed by the environment dynamics,  
+the probability of a state–action–reward trajectory
+\[\psi=\bigl(s_0,a_0,r_1,\dots,s_{T-1},a_{T-1},r_T,s_T\bigr)\]
+depends only on $\theta$. Viewing trajectories as samples of the random variable $\Psi\sim P_{\theta}$, their likelihood is
+\[
+P_{\theta}(\psi)=\mu(s_0)\prod_{t=0}^{T-1}
+\pi_{\theta}(a_t\mid s_t)\,\mathcal{P}^{a_t}_{s_t,s_{t+1}},
+\]
+where $\mu(s_0)$ is the initial-state distribution and $\mathcal{P}^{a_t}_{s_t,s_{t+1}}$ is the environment’s transition probability. A trajectory’s cumulative reward is
+\[
+R(\psi)=\sum_{t=1}^{T} r_t.
+\]
+
+The learning objective is to find parameters $\theta$ that maximise the expected return
+\[
+J(\theta)=
+\mathbb{E}_{\Psi\sim P_{\theta}}\!\bigl[R(\Psi)\bigr]
+=\sum_{\psi}P_{\theta}(\psi)R(\psi),
+\]
+leading to the unconstrained optimisation problem $\max_{\theta}J(\theta)$.  
+Gradient ascent is standard, with
+\[
+\begin{aligned}
+\nabla_{\theta}J(\theta)
+&= \nabla_{\theta}\sum_{\psi}P_{\theta}(\psi)R(\psi)\\
+&= \sum_{\psi}P_{\theta}(\psi)R(\psi)\,\nabla_{\theta}\log P_{\theta}(\psi)\\
+&= \mathbb{E}_{\Psi\sim P_{\theta}}\!\Bigl[
+  R(\Psi)\sum_{t=0}^{T-1}\nabla_{\theta}\log\pi_{\theta}(A_t\mid S_t)
+\Bigr]\\
+&\approx \frac{1}{m}\sum_{i=1}^{m}
+  R(\psi_i)\sum_{t=0}^{T-1}
+  \nabla_{\theta}\log\pi_{\theta}(a_t^{\,i}\mid s_t^{\,i}),
+\end{aligned}
+\]
+where the approximation uses $m$ sampled trajectories
+\[
+\psi_i=\bigl(s_0^{\,i},a_0^{\,i},r_1^{\,i},\dots,
+            s_{T-1}^{\,i},a_{T-1}^{\,i},r_T^{\,i},s_T^{\,i}\bigr),
+\]
+and $\nabla_{\theta}\log\pi_{\theta}(a_t^{\,i}\mid s_t^{\,i})$ is the score function.  
+With an offline trajectory dataset, this estimator enables direct optimisation of $\theta$, yielding a high-quality initial policy that can later be refined online.
+
+Although unbiased, the estimator often has high variance.  
+Introducing a state-dependent baseline $b(s_t)$ preserves unbiasedness while reducing variance, giving
+\[
+\nabla_{\theta}J(\theta)\approx
+\frac{1}{m}\sum_{i=1}^{m}\sum_{t=0}^{T-1}
+\bigl[(R_t^{\,i}-b_t(s_t^{\,i}))\,
+      \nabla_{\theta}\log\pi_{\theta}(a_t^{\,i}\mid s_t^{\,i})\bigr].
+\]
+
+In summary, policy-gradient reinforcement learning maximises the expected return of trajectories contained in an offline dataset, directly optimising a parameterised policy without extra interaction and providing a strong starting point for subsequent learning.
+
+Similar to policy-gradient methods in reinforcement learning, a stochastic multi-armed bandit can be viewed as a special case of reinforcement learning in which the state remains unchanged after each action; effectively, the system contains only a single dummy state. Under this assumption, the usual state variable $s$ and the transition probabilities $\mathcal{P}_{s,s'}^{a}$ degenerate to constants and can be ignored.  
+Consequently, a state–action–reward trajectory reduces to an action–reward sequence
+\[
+\psi=\bigl(a_0,r_1,\dots,a_{T-1},r_T\bigr).
+\]
+Each trajectory $\psi$ is a sample of the random variable $\Psi\sim P_{\theta}$.  
+Because every action choice may depend on all previous actions and their received rewards, the probability of observing $\psi$ is
+\[
+P_{\theta}(\psi)=
+\prod_{t=0}^{T-1}
+\pi_{\theta}\!\bigl(a_t \mid a_0,r_1,\ldots,a_{t-1},r_t\bigr).
+\]
+
+The objective is defined analogously as
+\[
+J(\theta)=
+\mathbb{E}_{\Psi\sim P_{\theta}}\!\bigl[R(\Psi)\bigr]
+=\sum_{\psi}P_{\theta}(\psi)R(\psi).
+\]
+
+In a stochastic bandit, the policy is parameterised by the softmax of a preference function,
+\[
+\pi_{\theta}(a)=
+\frac{\exp\!\bigl(\beta_t H_{\theta}(a)\bigr)}
+{\sum_{a'}\exp\!\bigl(\beta_t H_{\theta}(a')\bigr)},
+\]
+So its gradient can be written as
+\[
+\begin{aligned}
+\nabla_{\theta}\log\pi_{\theta}\!\bigl(a_t^i\bigr)
+&=
+\nabla_{\theta}\log
+\frac{\exp\!\bigl(\beta_t H_{\theta}
+(a_t^i \mid a_0^i, r_1^i,\ldots,a_{t-1}^i,r_t^i)\bigr)}
+{\displaystyle
+\sum_{a}\exp\!\bigl(\beta_t H_{\theta}
+(a \mid a_0^i, r_1^i,\ldots,a_{t-1}^i,r_t^i)\bigr)}
+\\[4pt]
+&=
+\beta_t\nabla_{\theta}
+H_{\theta}\!\bigl(a_t^i \mid a_0^i, r_1^i,\ldots,a_{t-1}^i,r_t^i\bigr)
+\\
+&\quad-
+\beta_t\frac{\displaystyle
+\sum_{a}\nabla_{\theta}H_{\theta}
+(a \mid a_0^i, r_1^i,\ldots,a_{t-1}^i,r_t^i)
+\exp\!\bigl(\beta_t H_{\theta}(a \mid a_0^i, r_1^i,\ldots,a_{t-1}^i,r_t^i)\bigr)}
+{\displaystyle
+\sum_{a}\exp\!\bigl(\beta_t H_{\theta}
+(a \mid a_0^i, r_1^i,\ldots,a_{t-1}^i,r_t^i)\bigr)}
+\\[4pt]
+&=
+\beta_t\!\Bigl(
+\nabla_{\theta}H_{\theta}\!\bigl(a_t^i \mid a_0^i, r_1^i,\ldots,a_{t-1}^i,r_t^i\bigr)
+-\sum_{a}\pi_{\theta}(a)\,
+\nabla_{\theta}H_{\theta}
+(a \mid a_0^i, r_1^i,\ldots,a_{t-1}^i,r_t^i)
+\Bigr),
+\end{aligned}
+\]
+where the exact form of
+$\nabla_{\theta}H_{\theta}
+(a\mid a_0^i, r_1^i,\ldots,a_{t-1}^i,r_t^i)$
+depends on the chosen preference function $H_{\theta}(a)$.
+
+Accordingly, the policy gradient for the multi-armed bandit becomes
+\[
+\begin{aligned}
+\nabla_{\theta}J(\theta)
+&\approx
+\frac{1}{m}\sum_{i=1}^{m}\sum_{t=0}^{T-1}
+\Bigl[(R_t^i-b_t)\,
+\nabla_{\theta}\log\pi_{\theta}
+\bigl(a_t^i \mid a_0^i, r_1^i,\ldots,a_{t-1}^i,r_t^i\bigr)\Bigr]
+\\
+&=
+\frac{1}{m}\sum_{i=1}^{m}\sum_{t=0}^{T-1}
+\Bigl[(R_t^i-b_t)\,\beta_t\!
+\Bigl(
+\nabla_{\theta}H_{\theta}\!\bigl(a_t^i \mid a_0^i, r_1^i,\ldots,a_{t-1}^i,r_t^i\bigr)
+\\
+&\qquad
+-\sum_{a}\pi_{\theta}(a)\,
+\nabla_{\theta}H_{\theta}
+(a \mid a_0^i, r_1^i,\ldots,a_{t-1}^i,r_t^i)
+\Bigr)\Bigr].
+\end{aligned}
+\]
+
+Because the state is fixed in a stochastic bandit, $b_t$ is typically set to a constant or to the running average reward $\bar{R}_t=\tfrac{1}{t}\sum_{\tau=0}^{t-1}R_{\tau}$.  
+Moreover, the preference at time $t$ depends on the preference at time $t-1$ together with $(a_{t-1},r_t)$.  
+Hence, unlike the Markov decision process setting, the bandit policy gradient cannot be further simplified using causality or Markov properties.
+
+After getting the policy gradient, we can pre-train the stochastic bandit with the given offline dataset in the following alrotihm procedure:
+\begin{algorithm}[H]
+    \textbf{Input:} the original (unaugmented) offline dataset
+    \begin{algorithmic}[1]
+      \State Generate additional trajectories with the offline diffusion model to obtain an augmented dataset
+      \State Pre-train UCB, Thompson Sampling, policy-gradient, and related algorithms on the augmented dataset
+      \State Deploy the pretrained models for online interaction and update the parameters continually
+    \end{algorithmic}
+    \label{alg:stochastic_bandit_pretrained}
+    \caption{Stochastic multi-armed bandit algorithm that augments an offline dataset with trajectories generated by a discrete diffusion model}
+\end{algorithm}
+
+
+\subsection{Contextual Bandit}
+We consider the stochastic $K$-armed contextual bandit problem. At each round $t \in [T]$, the agent observes a set of context vectors $\{\mathbf{x}_{t,a} \in \mathbb{R}^d \mid a \in [K]\}$, selects an action $a_t$, and receives a scalar reward $r_{t,a_t} \in \mathbb{R}$. The goal is to design a decision rule that leverages the full reward distribution to make informed and robust choices.
+Our goal is to maximize the following pseudo regret:
+
+$$
+R_T = \mathbb{E}\left[\sum_{t=1}^T \left( r_{t,a_t^\dagger} - r_{t,a_t} \right)\right],
+$$
+
+where the oracle action $a_t^\dagger$ is defined as:
+$
+a_t^\dagger = \arg\max_{a \in [K]} \pi^*(a \mid \mathbf{x}_{t,a}), 
+$
+and $\pi^*(a \mid \mathbf{x}_{t,a})$ represents an optimal decision rule that can depend on more than just the mean reward—e.g., variance, risk profiles, or quantiles.
+
+Rather than approximating $\mathbb{E}[r \mid \mathbf{x}, a]$, we adopt a distributional perspective and directly model the full conditional reward distribution:
+$
+r \sim P(r \mid \mathbf{x}, a). 
+$
+
+This allows our method to capture both the central tendency and the uncertainty structure (aleatoric) inherent in the environment, which is crucial in high-stakes or risk-sensitive applications.
+
+\paragraph{Diffusion-Based Reward Sampling}
+To capture the full conditional reward distribution $P(r \mid \mathbf{x}, a)$, we employ a diffusion as a flexible generative framework. Given an offline dataset $\mathcal{D}_{\text{offline}} = \{(\mathbf{x}_i, a_i, r_i)\}_{i=1}^N$, the diffusion model is trained to approximate the distribution of rewards conditioned on context-action pairs:
+
+$$
+r \sim P_{\text{diff}}(r \mid \mathbf{x}, a; \mathcal{W}_{\text{diff}}), 
+$$
+
+where $\mathcal{W}_{\text{diff}}$ denotes the parameters of the learned reverse process. The model consists of a Markovian forward process that gradually adds noise to reward samples, and a learned reverse process that denoises the corrupted inputs to recover samples from the target conditional distribution.
+
+At each round $t$, the agent observes the contextual features $\{\mathbf{x}_{t,a}\}_{a=1}^K$, and for each action $a \in [K]$, it draws a synthetic reward sample $\tilde{r}_a \sim P_{\text{diff}}(r \mid \mathbf{x}_{t,a})$. The action is then selected via:
+
+$$
+a_t = \arg\max_{a \in [K]} \tilde{r}_a. 
+$$
+
+This sampling-based decision rule inherently reflects the uncertainty encoded in the full reward distribution and allows the agent to balance exploitation and stochastic exploration without requiring explicit posterior variance estimation.

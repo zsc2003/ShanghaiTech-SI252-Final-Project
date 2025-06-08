@@ -1,0 +1,24 @@
+\section{Experiments} \label{sec:4_experiments}
+
+
+\input{section/4_experiments_stochastic_bandit}
+
+\subsection{contextual Bandit}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Img/context_compare.png}
+    \caption{Comparison of cumulative regret across different algorithms after 25 rounds of pertaining using the MNIST Dataset.}
+    \label{fig:context_regret}
+\end{figure}
+
+\paragraph{Setup}
+We evaluate our method on a contextual bandit task derived from MNIST, where each arm corresponds to a digit label. 
+All models are pretrained on 3{,}000 offline samples for 25 epochs. Our method uses a conditional discrete diffusion model with a single denoising step. Evaluation is conducted over 2{,}000 online rounds, and performance is measured via cumulative regret.
+We compare against \textbf{NeuralTS}, \textbf{Neural} $\boldsymbol{\varepsilon}$\textbf{-Greedy}, \textbf{NeuralUCB}, and \textbf{KernelUCB}. All methods share the same network architecture and training data. NeuralTS and $\varepsilon$-Greedy follow standard implementations from prior work.
+
+\paragraph{Results}
+As shown in Figure~\ref{fig:context_regret}, \textbf{Bernoulli Diffusion} outperforms UCB-based methods but underperforms NeuralTS and $\varepsilon$-Greedy. This suggests that while diffusion-based models can effectively learn conditional reward distributions and yield competitive performance, their stochastic nature may introduce unnecessary variance in binary-reward settings, where mean estimation is often sufficient. 
+The uncertainty captured by the diffusion model does not yield improved decision quality and instead increases variance in action selection.
+
+

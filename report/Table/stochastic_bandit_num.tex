@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{c c c c}
+    \toprule
+    Trajectory generation policy & UCB & TS & policy gradient \\
+    \midrule
+    copy, 100 trajectories& 1156.635 & 26.596 & 54.048 \\
+    copy, 500 trajectories& 621.581 & 13.996 & 52.293 \\
+    copy, 1000 trajectories & 341.470 & 3.517 & 54.164 \\
+    diffusion, 100 trajectories & 743.441 & 0.008 & 0.002 \\
+    diffusion, 500 trajectories & 236.908 & 0.056 & 0.000 \\
+    diffusion, 1000 trajectories & 4.660 & 0.025 & 0.000 \\
+    \bottomrule
+\end{tabular}
+\caption{Performance(average accumulated regret) of various algorithms on Bernoulli-reward bandits under different offline-dataset enlargement (trajectory-generation) policies.}
+\label{table:stochastic_bandit_num}
+\end{table}

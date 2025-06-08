@@ -1,0 +1,38 @@
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[->, >=stealth, auto, thick, node distance=1.5cm]
+        \tikzstyle{every state} = [
+            fill=gray!30,
+            draw=black,
+            circle,
+            minimum size=40pt,
+            font=\large\bfseries
+        ]
+
+        \tikzstyle{ellipsis state} = [
+            fill=none,
+            draw=none,
+            circle,
+            minimum size=20pt
+        ]
+
+        \node[state] (1) {$\x_T$};
+        \node[ellipsis state] (ellipsis1) at (2,0) {$\cdots$};
+        \node[state] (2) at (4, 0) {$\x_t$};
+        \node[state] (3) at (8, 0) {$\x_{t-1}$};
+        \node[ellipsis state] (ellipsis2) at (10, 0) {$\cdots$};
+        \node[state] (4) at (12, 0) {$\x_0$};
+
+        \draw[->] (1) -- (ellipsis1);
+        \draw[->] (ellipsis1) -- (2);
+
+        \draw[->] (2) -- (3) node[midway, above] {$p_{\theta}(\x_{t-1}|\x_t)$};
+
+        \path (3) edge[bend left=30, dashed] node[midway, below] {$q(\x_t|\x_{t-1})$} (2);
+
+        \draw[->] (3) -- (ellipsis2);
+        \draw[->] (ellipsis2) -- (4);
+    \end{tikzpicture}
+    \caption{Diffusion model represented as a Markov chain, with a forward process for noise addition during training and a backward process for denoising and generation.}
+    \label{fig:markov_chain}
+\end{figure}
